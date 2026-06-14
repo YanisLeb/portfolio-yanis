@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Yanis Lebsir</title>
+<style>
+  :root{
+    --bg: #F6F3EC;
+    --ink: #1F2A24;
+    --accent: #2D6A4F;
+    --accent-soft: #95C4AD;
+    --line: #D8D2C2;
+    --card: #FFFFFF;
+    --muted: #6C757D;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+  }
+  h1,h2,h3,h4{
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  /* ===== NAV ===== */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,243,236,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1100px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; flex-wrap:wrap; gap:10px;
+  }
+  .nav-inner .logo{font-family:'Georgia',serif; font-weight:700; font-size:1.2rem;}
+  .nav-links{display:flex; gap:18px; flex-wrap:wrap;}
+  .nav-links a{
+    text-decoration:none; color:var(--ink); font-size:0.92rem;
+    padding:6px 2px; border-bottom:2px solid transparent;
+    transition: border-color .2s, color .2s;
+  }
+  .nav-links a:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* ===== HERO ===== */
+  header.hero{
+    max-width:1100px; margin:0 auto;
+    padding:70px 24px 50px;
+    display:grid; grid-template-columns: 1.3fr 1fr; gap:40px; align-items:center;
+  }
+  header.hero .eyebrow{
+    text-transform:uppercase; letter-spacing:0.18em; font-size:0.75rem;
+    color:var(--accent); font-weight:600; margin-bottom:14px;
+  }
+  header.hero h1{font-size:2.8rem; line-height:1.15; margin-bottom:16px;}
+  header.hero p.lead{font-size:1.05rem; color:var(--muted); max-width:480px;}
+  .hero-photo{
+    aspect-ratio: 4/5; border-radius:14px; overflow:hidden;
+    border:1px solid var(--line); background:var(--card);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:0.9rem; text-align:center; padding:20px;
+  }
+  .hero-photo img{width:100%; height:100%; object-fit:cover; display:none;}
+
+  .contact-bar{
+    max-width:1100px; margin:0 auto; padding:0 24px 50px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .contact-bar a{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--card); border:1px solid var(--line);
+    padding:10px 16px; border-radius:8px; text-decoration:none;
+    color:var(--ink); font-size:0.9rem; transition:.2s;
+  }
+  .contact-bar a:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* ===== SECTIONS ===== */
+  section{
+    max-width:1100px; margin:0 auto; padding:60px 24px;
+    border-top:1px solid var(--line);
+  }
+  section .section-tag{
+    text-transform:uppercase; letter-spacing:0.18em; font-size:0.72rem;
+    color:var(--accent); font-weight:700; margin-bottom:8px;
+  }
+  section h2{font-size:1.9rem; margin-bottom:8px;}
+  section .section-sub{color:var(--muted); font-size:0.98rem; margin-bottom:36px; max-width:680px;}
+
+  .placeholder{
+    border:1px dashed var(--accent-soft);
+    background:#FBFAF6;
+    border-radius:10px;
+    padding:22px;
+    color:var(--muted);
+    font-size:0.92rem;
+    margin-bottom:20px;
+  }
+  .placeholder strong{color:var(--accent);}
+  .placeholder ul{margin:10px 0 0 20px;}
+  .placeholder li{margin-bottom:4px;}
+
+  /* ===== CARD GRID (SAE / projets) ===== */
+  .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:24px;
+  }
+  .card h3{font-size:1.15rem; margin-bottom:6px;}
+  .card .tag{
+    display:inline-block; background:var(--accent-soft); color:#1B4332;
+    font-size:0.72rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.08em; padding:3px 9px; border-radius:5px; margin-bottom:10px;
+  }
+
+  /* ===== COMPETENCES TABLE ===== */
+  table.competences{
+    width:100%; border-collapse:collapse; background:var(--card);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    font-size:0.92rem;
+  }
+  table.competences th, table.competences td{
+    border:1px solid var(--line); padding:14px; text-align:left; vertical-align:top;
+  }
+  table.competences th{
+    background:var(--accent); color:#fff; font-family:'Georgia',serif; font-weight:700;
+  }
+  table.competences td.muted{color:var(--muted); font-style:italic;}
+
+  /* ===== TIMELINE (passeport culturel / objectifs) ===== */
+  .timeline{border-left:2px solid var(--accent-soft); padding-left:24px; display:flex; flex-direction:column; gap:24px;}
+  .timeline .item{position:relative;}
+  .timeline .item::before{
+    content:''; position:absolute; left:-30px; top:6px;
+    width:10px; height:10px; border-radius:50%; background:var(--accent);
+  }
+  .timeline .item .when{font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent); font-weight:700;}
+  .timeline .item h4{margin:4px 0 6px; font-size:1.05rem;}
+
+  /* ===== OBJECTIFS COLUMNS ===== */
+  .obj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .obj-grid .card h3{font-size:0.95rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent);}
+
+  /* ===== TESTIMONIALS ===== */
+  .quote-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  .quote{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:24px; position:relative;
+  }
+  .quote p{font-style:italic; margin-bottom:12px;}
+  .quote footer{font-size:0.85rem; color:var(--muted); font-weight:600; font-style:normal;}
+
+  /* ===== CV / DOWNLOAD ===== */
+  .cv-box{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    background:var(--accent); color:#fff; border-radius:12px; padding:28px 32px;
+  }
+  .cv-box h3{color:#fff; margin-bottom:4px;}
+  .cv-box p{color:#E0EFE7; font-size:0.9rem;}
+  .cv-box a.btn{
+    background:#fff; color:var(--accent); padding:10px 22px; border-radius:8px;
+    text-decoration:none; font-weight:700; font-size:0.9rem;
+  }
+
+  footer.site-footer{
+    text-align:center; padding:36px 24px; color:var(--muted); font-size:0.85rem;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width: 800px){
+    header.hero{grid-template-columns:1fr;}
+    .hero-photo{order:-1; max-width:260px;}
+    .grid-2, .obj-grid, .quote-grid{grid-template-columns:1fr;}
+    section h2{font-size:1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Yanis Lebsir</div>
+    <div class="nav-links">
+      <a href="#presentation">Présentation</a>
+      <a href="#pourquoi">Pourquoi la data ?</a>
+      <a href="#sae">Bilan SAE</a>
+      <a href="#competences">Compétences</a>
+      <a href="#alternance">Alternance</a>
+      <a href="#poursuite">Poursuite d'études</a>
+      <a href="#objectifs">Objectifs</a>
+      <a href="#temoignages">Témoignages</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO / ACCUEIL ===== -->
+<header class="hero" id="accueil">
+  <div>
+    <div class="eyebrow">Portfolio, BUT Science des données, S6</div>
+    <h1>Yanis Lebsir</h1>
+    <p style="font-family:'Georgia',serif; font-style:italic; font-size:1.4rem; color:var(--accent); margin-bottom:14px;">
+      « Tu es là où tu dois être. »
+    </p>
+    <p class="lead">
+      Face à une difficulté, je préfère avancer que rester bloqué : chaque obstacle est une
+      occasion d'apprendre quelque chose de nouveau, un outil, une méthode, ou simplement
+      une autre façon de voir le problème.
+    </p>
+  </div>
+  <div class="hero-photo">
+    <img src="assets/photo.jpg" alt="Photo de Yanis Lebsir" style="display:block;">
+  </div>
+</header>
+
+<div class="contact-bar">
+  <a href="mailto:yanis.lebsir6@gmail.com">📧 yanis.lebsir6@gmail.com</a>
+  <a href="tel:+33618330129">📱 06 18 33 01 29</a>
+  <a href="https://www.linkedin.com/in/yanis-lebsir-002162301/" target="_blank">💼 LinkedIn</a>
+</div>
+
+<!-- ===== PRESENTATION PERSONNELLE ===== -->
+<section id="presentation">
+  <div class="section-tag">01 — Qui je suis</div>
+  <h2>Présentation personnelle</h2>
+  
+  <div class="placeholder">
+    <h4 style="font-family:'Georgia',serif; color:var(--accent); margin-bottom:10px;">Qui suis-je ?</h4>
+    <p style="margin-bottom:14px;">
+      Je suis Yanis Lebsir, actuellement étudiant en troisième année de BUT Science des Données
+      à l'IUT de Villetaneuse. J'aime particulièrement travailler sur l'analyse statistique, car
+      cela permet de mieux comprendre certains problèmes. Je souhaite devenir data analyst dans
+      le football, mon sport préféré ! Pour cela, je réalise beaucoup de projets personnels afin
+      d'acquérir de l'expérience.
+    </p>
+
+    <h4 style="font-family:'Georgia',serif; color:var(--accent); margin-bottom:10px;">Mes qualités</h4>
+    <ul style="margin:0 0 14px 20px;">
+      <li><strong>Curiosité</strong> : j'aime beaucoup poser des questions pour comprendre ce qui m'entoure.</li>
+      <li><strong>Esprit d'équipe</strong> : j'aime beaucoup travailler en équipe, car chacun peut repérer
+      des éléments que d'autres n'auraient pas forcément remarqués. C'est aussi l'occasion de partager
+      ses connaissances, d'expliquer certains points et de confronter nos idées pour produire un
+      travail de meilleure qualité.</li>
+      <li><strong>Adaptabilité</strong> : je m'adapte facilement aux problématiques variées des projets
+      en data science.</li>
+    </ul>
+
+    <h4 style="font-family:'Georgia',serif; color:var(--accent); margin-bottom:10px;">Mes compétences</h4>
+    <ul style="margin:0 0 20px 20px;">
+      <li><strong>Langages de programmation</strong> : Python, RStudio, SQL, HTML, SAS, utilisés pour
+      l'analyse statistique, la manipulation de données ou encore la programmation web.</li>
+      <li><strong>Datavisualisation et reporting</strong> : Power BI, Tableau, Metabase, Excel, pour
+      pouvoir illustrer des données.</li>
+    </ul>
+
+    <p style="margin-bottom:14px;">
+      Ces trois années de BUT Science des données à l'IUT de Villetaneuse ont été un véritable
+      apprentissage progressif : d'une approche encore théorique des données en première année,
+      je suis passé à une pratique plus autonome, capable de mener un projet de bout en bout,
+      de l'analyse du besoin jusqu'à la restitution des résultats.
+    </p>
+    <p style="margin-bottom:14px;">
+      Au fil des SAE, j'ai été confronté à des situations où je devais apprendre un outil que je
+      ne connaissais pas (Metabase en S1, Mathematica en S4) sans accompagnement complet, et
+      m'organiser pour livrer un résultat dans un temps limité, en équipe ou en autonomie. Plutôt
+      que de me décourager face à un outil inconnu, j'ai pris l'habitude de tester directement
+      sur les données du projet pour apprendre par la pratique, ce qui m'a permis de progresser
+      rapidement et de rester efficace malgré l'incertitude.
+    </p>
+    <p style="margin-bottom:14px;">
+      Mon alternance chez Adoma a été une rencontre marquante avec le monde professionnel : elle
+      m'a confronté à des attentes concrètes (production de KPI, fiabilité des données) et m'a
+      permis d'échanger régulièrement avec les équipes métiers, ce qui m'a appris à adapter mon
+      discours technique à des interlocuteurs non-experts.
+    </p>
+    <p>
+      Ce qui me caractérise dans ma façon de travailler, c'est ma rigueur dans le traitement des
+      données, particulièrement développée à travers le contrôle qualité chez Adoma, et ma
+      curiosité pour les outils de visualisation, qui me permet de m'adapter rapidement à un
+      nouvel environnement technique (Metabase, Mathematica, Power BI, Tableau).
+    </p>
+  </div>
+</section>
+
+<!-- ===== POURQUOI LA SCIENCE DES DONNEES ===== -->
+<section id="pourquoi">
+  <div class="section-tag">02 — Mon orientation</div>
+  <h2>Pourquoi la science des données ?</h2>
+  <div class="placeholder">
+    <h4 style="font-family:'Georgia',serif; color:var(--accent); margin-bottom:10px;">Un choix guidé par le cœur</h4>
+    <p style="margin-bottom:14px;">
+      Mon choix de m'orienter vers la science des données est un choix guidé par le cœur, à double titre.
+    </p>
+    <p style="margin-bottom:14px;">
+      D'une part, parce qu'il me permet de rester connecté à ma passion, le football (même si je
+      n'ai pas suivi la voie d'un joueur professionnel). J'ai découvert à travers la data un moyen
+      concret de contribuer à ce sport qui m'inspire. Aujourd'hui, la science des données est un
+      outil essentiel pour optimiser les performances des joueurs, analyser les stratégies et
+      guider les décisions des clubs. Ce qui m'intéresse particulièrement, c'est la façon dont
+      elle apporte un regard neuf et objectif sur un sport aussi riche et complexe.
+    </p>
+    <p>
+      D'autre part, mon choix est aussi guidé par des valeurs humaines. Je suis sensible aux
+      enjeux du secteur de la santé, où la donnée joue un rôle crucial pour la prévention,
+      l'amélioration des soins et l'analyse d'informations médicales.
+    </p>
+  </div>
+</section>
+
+<!-- ===== BILAN SAE ===== -->
+<section id="sae">
+  <div class="section-tag">03 — Mes projets</div>
+  <h2>Bilan à partir des SAE (S1 → S6)</h2>
+  
+
+  <div class="grid-2" style="grid-template-columns:1fr;">
+
+    <div class="card">
+      <span class="tag">S1</span>
+      <h3>Implémentation d'une base de données dans un SGBD relationnel</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        Projet de fin de semestre en S1, réalisé en équipe : implémentation d'une base de données
+        sur le thème des festivals dans un SGBD (Metabase), avec génération de statistiques
+        détaillées (par région, type de festival) et de visualisations interactives.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <p style="margin-top:6px;">
+        Participation à l'implémentation de la base dans Metabase, création des graphiques de
+        restitution, et rédaction du rapport final présentant les statistiques et visualisations
+        produites.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">SQL avancé, SGBD Metabase, structuration de données, visualisation de données.</p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Consolidation des compétences en structuration de données et en SQL avancé, premières
+        bases en visualisation interactive avec Metabase, et travail efficace en équipe.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        La principale difficulté a été la prise en main de Metabase, un outil que je découvrais
+        et dont je ne maîtrisais pas encore les fonctionnalités. J'ai dû apprendre rapidement
+        à l'utiliser en parallèle de l'avancement du projet, en testant directement les
+        fonctionnalités sur nos données pour monter en compétence au fur et à mesure.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">S2</span>
+      <h3>Projet 3 : Régression sur données médicales</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        Projet en binôme visant à appliquer des modèles de régression sur des données réelles
+        issues du domaine médical : un jeu de données portant sur des tumeurs (bénignes ou
+        malignes), avec pour objectif de déterminer les facteurs discriminants à travers des
+        méthodes statistiques.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <p style="margin-top:6px;">
+        Nettoyage et transformation des données avec Python (Pandas) : repérage des valeurs
+        aberrantes, traitement des valeurs manquantes, préparation des variables. Visualisation
+        des corrélations entre variables avec Seaborn et formulation d'hypothèses sur leur
+        pertinence. Test de plusieurs modèles de régression (linéaire simple, multiple, logistique),
+        avec séparation des jeux d'apprentissage/test. Présentation des résultats dans un rapport
+        détaillé et lors d'une soutenance orale.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">
+        Python (Pandas, Seaborn, scikit-learn), régression linéaire/multiple/logistique,
+        évaluation par R², RMSE et matrice de confusion.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Nettoyage de données médicales avec Python, visualisation avec Seaborn, mise en œuvre
+        de modèles supervisés (régression linéaire et logistique) avec scikit-learn, évaluation
+        des performances de modèles, et communication scientifique (rapport écrit + oral),
+        notamment savoir vulgariser des résultats complexes pour les rendre accessibles.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        La principale difficulté a été la coordination en binôme : répartir équitablement les
+        tâches entre nettoyage des données, modélisation et rédaction, tout en gardant une vision
+        cohérente du projet à deux. Nous avons mis en place des points réguliers pour synchroniser
+        notre avancement et nous assurer que nos parties s'articulaient bien dans le rapport final.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">S3</span>
+      <h3>Description et prévision de données temporelles : mortalité routière (INSEE)</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        Cette SAE portait sur l'analyse de données temporelles concernant le nombre de morts sur
+        la route, fournies par l'INSEE, sur une base mensuelle pour une année complète.
+        L'objectif était de comprendre les variations sur cette période et de produire des
+        prévisions pour les valeurs futures.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <p style="margin-top:6px;">
+        Description précise des données en mettant en évidence les tendances et les variations
+        saisonnières, puis prévision des valeurs futures à l'aide des outils statistiques
+        disponibles sur Excel. Production de graphiques clairs pour illustrer l'évolution des
+        données et explication des résultats obtenus.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">
+        Travail entièrement réalisé sur Excel : fonctions statistiques pour la description et la
+        prévision de séries temporelles, mise en forme graphique pour la restitution.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Identification d'une tendance saisonnière marquée dans les données, avec des prévisions
+        montrant une bonne correspondance avec les tendances passées. Ce projet m'a permis de
+        mieux maîtriser Excel et ses fonctions statistiques, et de présenter des résultats clairs
+        appuyés par des graphiques pertinents. Il a renforcé mes compétences en analyse de
+        données temporelles.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        La principale difficulté a été de distinguer clairement la tendance saisonnière du bruit
+        dans des données mensuelles sur une seule année, ce qui rendait l'identification des
+        cycles moins évidente. J'ai croisé plusieurs représentations graphiques (courbes mensuelles,
+        moyennes mobiles) pour confirmer la tendance avant de m'appuyer sur elle pour les prévisions.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">S4</span>
+      <h3>Analyse des crimes en Inde (Mathematica)</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        À partir d'une base de données publique sur les crimes en Inde, construction d'un tableau
+        de bord interactif pour répondre à une problématique : qui sont les principales victimes ?
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <p style="margin-top:6px;">
+        Récupération et nettoyage des données, structuration du raisonnement analytique,
+        construction d'un tableau de bord interactif avec visualisations dynamiques, et
+        présentation des résultats de façon claire et accessible.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">
+        Mathematica, un langage que je ne connaissais pas du tout au début, qui n'est pas
+        un outil standard en data science, mais que j'ai trouvé intéressant à apprendre,
+        notamment pour la visualisation de données dynamiques.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Récupération et nettoyage de données depuis une source externe, prise en main autonome
+        d'un nouvel outil/langage, structuration d'un raisonnement analytique face à une
+        problématique ouverte, et présentation de résultats compréhensibles pour un public
+        non-expert. Ce projet m'a aussi poussé à mieux m'organiser et à travailler en autonomie.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        La principale difficulté a été de choisir un jeu de données qui m'intéresse vraiment
+        et d'en faire un sujet pertinent à présenter à mes professeurs. J'ai pris le temps de
+        chercher plusieurs bases de données avant de retenir celle sur les crimes en Inde, en
+        m'assurant qu'elle permettait de poser une vraie problématique (qui sont les principales
+        victimes ?) et de la traiter de façon visuelle avec Mathematica.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">S5</span>
+      <h3>Projet de Data Mining : analyse de la montée du niveau de la mer</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        Projet réalisé en trinôme visant à étudier l'impact des émissions de CO₂ et de différentes
+        variables climatiques sur la montée du niveau de la mer.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <ul style="margin:6px 0 0 20px;">
+        <li>Collecte, nettoyage et préparation de données climatiques</li>
+        <li>Analyse exploratoire des données (EDA) et étude des corrélations</li>
+        <li>Modélisation supervisée : régression linéaire, Random Forest, kNN</li>
+        <li>Évaluation critique des modèles</li>
+        <li>Identification des limites liées au caractère temporel du phénomène</li>
+      </ul>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">
+        Pipeline data complet : collecte, nettoyage, analyse exploratoire (EDA), modélisation
+        supervisée (régression linéaire, Random Forest, kNN), évaluation critique des modèles.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Approche complète du pipeline data, de la collecte à l'évaluation des modèles ;
+        renforcement des compétences en machine learning supervisé ; découverte concrète
+        des forces et faiblesses des différents modèles testés ; développement de l'analyse
+        critique de modèles prédictifs face à des données climatiques volumineuses,
+        hétérogènes et fortement temporelles.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        En raison de la complexité du sujet et de l'ampleur du travail demandé, certaines
+        difficultés ont été rencontrées, ce qui a partiellement limité l'atteinte de certains
+        objectifs initiaux. La gestion de données climatiques volumineuses, hétérogènes et
+        fortement temporelles a nécessité un important travail de préparation et d'ajustement
+        méthodologique. La mise en œuvre et la comparaison de plusieurs modèles ont également
+        été contraintes par le temps disponible et la charge de travail du trinôme, conduisant
+        à une priorisation de certaines tâches. Ces difficultés ont néanmoins constitué un
+        levier d'apprentissage important, tant sur le plan technique qu'organisationnel,
+        notamment sur la gestion de données temporelles et les limites de la prédiction à
+        long terme.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">S6</span>
+      <h3>SAE 502 : migration de données SQL vers NoSQL</h3>
+
+      <p style="margin-top:14px;"><strong>Contexte & enjeux</strong></p>
+      <p style="margin-top:6px;">
+        L'objectif de ce projet était de rendre la migration de données entre un environnement
+        relationnel (SQL) et un environnement NoSQL quasiment invisible, et surtout de
+        l'automatiser. Il s'appuyait sur les notions de normalisation/dénormalisation manuelle
+        et de programmation orientée objet (abstraction, Object-Relation Mapping, DAO).
+      </p>
+
+      <p style="margin-top:14px;"><strong>Tâches réalisées</strong></p>
+      <p style="margin-top:6px;">
+        Création de mes propres données, mise en place d'une normalisation et d'une
+        dénormalisation manuelle, puis représentation de ces données de manière abstraite à
+        l'aide de la programmation orientée objet. La dernière étape consistait à automatiser
+        la migration entre les différentes représentations (relationnel ↔ NoSQL), le tout
+        documenté dans un notebook Jupyter.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Méthodes & outils mobilisés</strong></p>
+      <p style="margin-top:6px;">
+        Python (notebook Jupyter), programmation orientée objet, pattern DAO (Data Access
+        Object), modélisation relationnelle et NoSQL, ORM (Object-Relation Mapping).
+      </p>
+
+      <p style="margin-top:14px;"><strong>Compétences acquises & degré de maîtrise</strong></p>
+      <p style="margin-top:6px;">
+        Ce projet m'a permis de passer d'une vision des données trop dépendante de leur support
+        de stockage à une représentation abstraite, réutilisable pour migrer facilement vers du
+        relationnel ou du NoSQL. C'est une compétence clé pour penser des architectures de
+        données flexibles, complémentaire aux compétences de modélisation statistique développées
+        sur les autres SAE.
+      </p>
+
+      <p style="margin-top:14px;"><strong>Difficulté rencontrée & comment tu as rebondi</strong></p>
+      <p style="margin-top:6px;">
+        La principale difficulté a été de concevoir une représentation abstraite des données qui
+        soit suffisamment générique pour fonctionner aussi bien en SQL qu'en NoSQL, sans perdre
+        d'information lors de la migration. J'ai procédé étape par étape : d'abord normaliser et
+        dénormaliser manuellement pour bien comprendre les transformations nécessaires, avant de
+        les automatiser via la couche d'abstraction objet.
+      </p>
+    </div>
+
+  </div>
+  <p style="margin-top:16px; font-size:0.85rem; color:var(--muted);">
+    D'autres projets ont également été réalisés durant la formation
+    (intégration de données dans un datawarehouse, concours national de datavisualisation...).
+  </p>
+</section>
+
+<!-- ===== TABLEAU 4 COMPETENCES ===== -->
+<section id="competences">
+  <div class="section-tag">04 — Auto-évaluation</div>
+  <h2>Tableau récapitulatif des 4 compétences du BUT Informatique</h2>
+  
+
+  <table class="competences">
+    <thead>
+      <tr>
+        <th>Compétence</th>
+        <th>Niveau atteint (niveau 3)</th>
+        <th>Exemples concrets (SAE / stage / alternance)</th>
+        <th>Auto-évaluation critique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Analyser</strong></td>
+        <td>À l'aise / correct</td>
+        <td>Formulation de la problématique dans le projet S4 (crimes en Inde (qui sont les principales victimes ?)) et étude des facteurs discriminants dans le projet S2 (régression sur données médicales).</td>
+        <td>Je suis à l'aise pour cerner un besoin et formuler une problématique data exploitable, en partant d'un jeu de données brut. Cette compétence s'est renforcée projet après projet, de S2 à S5.</td>
+      </tr>
+      <tr>
+        <td><strong>Modéliser</strong></td>
+        <td>À l'aise / correct</td>
+        <td>Modèles de régression linéaire/logistique en S2, et modélisation supervisée (régression linéaire, Random Forest, kNN) en S5.</td>
+        <td>Je maîtrise correctement le choix et la mise en œuvre de plusieurs modèles supervisés, ainsi que leur évaluation (R², RMSE, matrice de confusion). Le projet S5 m'a confronté aux limites de la modélisation sur des données temporelles, ce qui m'a fait progresser sur l'analyse critique des modèles.</td>
+      </tr>
+      <tr>
+        <td><strong>Traiter</strong></td>
+        <td>Niveau de base, à approfondir</td>
+        <td>Nettoyage et préparation de données avec Python/Pandas en S2 et S5 ; automatisation de processus chez Adoma.</td>
+        <td>J'ai les bases du nettoyage et de la préparation de données avec Python, mais je considère que c'est la compétence sur laquelle j'ai le plus de marge de progression, notamment sur l'automatisation et le traitement de gros volumes de données hétérogènes (comme rencontré en S5). C'est un axe que je veux approfondir en cycle ingénieur.</td>
+      </tr>
+      <tr>
+        <td><strong>Valoriser</strong></td>
+        <td>À l'aise / correct</td>
+        <td>Visualisations interactives avec Metabase en S1, tableau de bord avec Mathematica en S4, dashboards Power BI/Tableau chez Adoma.</td>
+        <td>Je suis à l'aise pour construire des restitutions visuelles claires et pour présenter des résultats à un public non-expert (rapport, oral, dashboard). C'est une compétence que j'ai pu pratiquer régulièrement, sur des outils variés (Metabase, Mathematica, Power BI, Tableau).</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===== BILAN ALTERNANCE ===== -->
+<section id="alternance">
+  <div class="section-tag">05 — Mon expérience en entreprise</div>
+  <h2>Bilan de l'alternance / du stage BUT3</h2>
+  
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Culture & pratiques d'entreprise</h3>
+      <p style="margin-top:10px;">
+        Chez Adoma, en tant qu'alternant Chargé d'études statistiques, j'ai évolué au sein d'une
+        équipe orientée vers le suivi de l'activité par la donnée. Le travail s'organisait autour
+        de points réguliers avec les équipes métiers pour comprendre leurs besoins en matière de
+        KPI et de tableaux de bord, puis de phases de production (collecte, contrôle qualité,
+        mise en forme dans Power BI et Tableau).
+      </p>
+      <p style="margin-top:10px;">
+        Les outils principaux mobilisés étaient Power BI, Tableau, Excel et Python pour
+        l'automatisation de certains traitements. Mon rôle m'a permis de travailler à la fois
+        en autonomie sur des tâches techniques et en lien direct avec les équipes pour ajuster
+        les livrables à leurs attentes.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Gestion des conflits & blocages techniques</h3>
+      <p style="margin-top:10px;">
+        Un blocage récurrent était lié au contrôle qualité des données : des écarts entre les
+        sources et les tableaux de bord apparaissaient régulièrement, et il fallait identifier
+        précisément leur origine avant de pouvoir corriger les indicateurs. J'ai appris à
+        procéder de façon méthodique : vérifier les sources une par une, comparer les valeurs
+        attendues et obtenues, et documenter les écarts trouvés, plutôt que de chercher à
+        corriger dans l'urgence sans comprendre la cause.
+      </p>
+      <p style="margin-top:10px;">
+        Cette approche m'a permis de gagner en rigueur et de proposer, par la suite, des
+        automatisations qui réduisaient la fréquence de ces écarts.
+      </p>
+    </div>
+    <div class="card">
+      <h3>« Qu'avez-vous découvert de vous-même par le biais de l'alternance ? »</h3>
+      <p style="margin-top:10px;">
+        Mon alternance chez Adoma m'a permis de découvrir que je suis capable de travailler en
+        autonomie sur des missions concrètes, avec de vraies échéances et des attentes précises
+        de la part des équipes. J'ai appris à m'organiser pour gérer plusieurs tâches en parallèle
+        (production d'indicateurs, contrôle qualité, automatisation), et à structurer mon travail
+        sans attendre qu'on me guide à chaque étape.
+      </p>
+      <p style="margin-top:10px;">
+        Cette expérience m'a aussi confirmé que j'apprécie particulièrement le moment où je dois
+        rendre compréhensible un résultat technique pour des personnes qui ne sont pas du tout
+        data, que ce soit via un tableau de bord ou une explication directe. C'est quelque chose
+        que je veux continuer à développer dans mon futur cycle ingénieur.
+      </p>
+    </div>
+    <div class="card">
+      <h3>« Ce dont je suis le plus fier »</h3>
+      <p style="margin-top:10px;">
+        Ce dont je suis le plus fier durant mon alternance chez Adoma, c'est d'avoir contribué
+        directement à la production d'indicateurs clés (KPI) et à la conception de tableaux de
+        bord utilisés par les équipes au quotidien. Voir que mon travail de contrôle qualité et
+        d'automatisation des processus avait un impact concret sur le suivi de l'activité de
+        l'entreprise m'a donné le sentiment d'apporter une vraie valeur, et pas seulement de
+        réaliser des exercices théoriques comme à l'IUT.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POURSUITE D'ETUDES ===== -->
+<section id="poursuite">
+  <div class="section-tag">06 — Et après ?</div>
+  <h2>Définition de la poursuite d'études</h2>
+  
+  <div class="placeholder">
+    <p style="margin-bottom:14px;">
+      À la rentrée de septembre 2026, je rejoins le cycle ingénieur Data &amp; IA de l'ECE Paris,
+      sur 3 ans, en alternance selon un rythme de 3 semaines en entreprise / 3 semaines en école.
+      Ce choix s'inscrit dans la continuité directe de mon BUT Science des données : il me permet
+      d'approfondir mes compétences en analyse, modélisation et traitement de données tout en
+      les confrontant en continu à des problématiques d'entreprise concrètes.
+    </p>
+    <p style="margin-bottom:14px;">
+      Le format en alternance correspond à ma façon de progresser : j'apprends mieux en
+      appliquant rapidement ce que je découvre en cours à des missions réelles, et inversement
+      en ramenant les questions rencontrées en entreprise vers mes apprentissages théoriques.
+      Mon expérience en alternance pendant le BUT m'a confirmé que cet aller-retour est le cadre
+      dans lequel je suis le plus efficace.
+    </p>
+    <p>
+      Ce que j'attends de ces 3 années, c'est de pouvoir aller plus loin dans la modélisation
+      et l'IA appliquée, des domaines que j'ai déjà abordés en BUT (régression, machine learning
+      supervisé) mais que je veux maîtriser à un niveau plus avancé. Je souhaite aussi continuer
+      à intervenir sur des missions où la donnée est mise au service d'une décision concrète,
+      que ce soit dans un cadre généraliste ou, à terme, dans le secteur du sport.
+    </p>
+  </div>
+</section>
+
+<!-- ===== OBJECTIFS ===== -->
+<section id="objectifs">
+  <div class="section-tag">07 — Ma trajectoire</div>
+  <h2>Objectifs</h2>
+  
+  <div class="obj-grid">
+    <div class="card">
+      <h3>Court terme</h3>
+      <div class="placeholder" style="margin-top:10px;">
+        Trouver une alternance en Data &amp; IA pour la rentrée de septembre 2026, en cohérence
+        avec le rythme 3 semaines / 3 semaines de l'ECE Paris et basée en Île-de-France.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Moyen terme</h3>
+      <div class="placeholder" style="margin-top:10px;">
+        Réussir les 3 années du cycle ingénieur Data &amp; IA à l'ECE Paris, en construisant
+        une montée en compétences progressive sur l'ensemble de la chaîne data : de la collecte
+        et du traitement jusqu'à la modélisation et la mise en production de modèles d'IA.
+        Je souhaite approfondir particulièrement la modélisation statistique et le machine
+        learning, en cherchant si possible des projets ou stages liés à l'analyse de données
+        sportives.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Long terme</h3>
+      <div class="placeholder" style="margin-top:10px;">
+        Mon ambition à long terme est de devenir data analyst dans le secteur du football,
+        en mettant mes compétences en analyse statistique et en modélisation au service de la
+        performance sportive (analyse de la performance des joueurs, des stratégies de jeu,
+        aide à la décision pour les clubs). Le secteur de la santé reste également un domaine
+        qui m'intéresse pour son utilité sociale, et que je pourrais envisager comme alternative
+        ou complément si une opportunité se présente.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEMOIGNAGES ===== -->
+<section id="temoignages">
+  <div class="section-tag">08 — Ce qu'on dit de moi</div>
+  <h2>Témoignages</h2>
+
+  <div class="quote-grid" style="grid-template-columns:1fr; max-width:600px;">
+    <div class="quote">
+      <p>
+        « Yanis est un alternant sérieux qui comprend très vite et qui n'hésite pas à proposer
+        des idées pour améliorer les choses. Humainement très sympathique, je lui souhaite tout
+        le meilleur pour la suite. »
+      </p>
+      <footer>— M. Ben Lahcen, Responsable Études et Développement, Adoma (tuteur d'alternance)</footer>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT / CV ===== -->
+<section id="contact">
+  <div class="section-tag">09 — Me contacter</div>
+  <h2>Contact & CV</h2>
+  <div class="cv-box">
+    <div>
+      <h3>CV à jour</h3>
+      <p>Version PDF de mon CV (alternance Data &amp; IA)</p>
+    </div>
+    <a class="btn" href="assets/CV_Yanis_Lebsir.pdf" target="_blank">Télécharger le CV (PDF)</a>
+  </div>
+
+  <div style="margin-top:24px;" class="placeholder">
+    <strong>Informations de contact :</strong>
+    <ul>
+      <li>Email : yanis.lebsir6@gmail.com</li>
+      <li>Téléphone : 06 18 33 01 29</li>
+      <li>LinkedIn : <a href="https://www.linkedin.com/in/yanis-lebsir-002162301/" target="_blank">linkedin.com/in/yanis-lebsir-002162301</a></li>
+      <li>Localisation : Eaubonne (95)</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="site-footer">
+  Portfolio S6, BUT Science des données, IUT de Villetaneuse, Yanis Lebsir
+</footer>
+
+</body>
+</html>
